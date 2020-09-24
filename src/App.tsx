@@ -1,14 +1,18 @@
-import { Button, FormControl, Input, InputLabel } from "@material-ui/core";
+import {
+  Button,
+  FormControl,
+  IconButton,
+  Input,
+  InputLabel,
+} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import Message from "./Message";
 import db from "./firebase";
 import firebase from "firebase";
 import FlipMove from "react-flip-move";
-import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
-  
-  
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [input, setInput] = useState("");
@@ -21,7 +25,9 @@ function App() {
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
         //@ts-ignore
-        setMessages(snapshot.docs.map((doc: any) => ({ id: doc.id, message: doc.data() })));
+        setMessages(
+          snapshot.docs.map((doc: any) => ({ id: doc.id, message: doc.data() }))
+        );
       });
   }, []);
 
@@ -36,34 +42,39 @@ function App() {
       username: username,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
-    toast.success("new message added")
+    toast.success("new message added");
     // setMessages([...messages, { username: username, text: input }]);
+    setInput('')
   };
   return (
     <div className="App">
       <h1>Hello clever programmer🚀</h1>
       <h2>Welcome {username}</h2>
       <form className="app__form">
-        <FormControl>
-          <InputLabel>Email address</InputLabel>
+        <FormControl className="app__formControl">
           <Input
+            className="app__input"
+            placeholder="Enter a message ... "
             value={input}
             onChange={(event) => setInput(event.currentTarget.value)}
           />
-          <Button
+          <IconButton
+          className="app__iconButton"
             disabled={!input}
             variant="contained"
             color="primary"
             type="submit"
             onClick={sendMessage}
           >
-            Send Message
-          </Button>
+            Send
+          </IconButton>
         </FormControl>
       </form>
       <FlipMove>
         {messages.map(({ id, message }: any) => {
-          return <Message key={id} id={id} username={username} message={message} />;
+          return (
+            <Message key={id} id={id} username={username} message={message} />
+          );
         })}
       </FlipMove>
       <ToastContainer />

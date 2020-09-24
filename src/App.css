@@ -28,11 +28,15 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app__formControl {
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+.app_iconButton {
+  flex:0;
+}
+
+.app__input {
+  flex: 1;
 }
